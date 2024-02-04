@@ -44,6 +44,9 @@ class LlamaWordAdder : WordAdder {
             AddBot: $word1Upper + $word2Upper =
         """.trimIndent()
 
+        // set new seed
+        val randomizedSeed = Random().nextInt()
+        inferParams.setSeed(randomizedSeed)
         val rawResult = model.generate(prompt, inferParams)
         // let's map this sucker to a string
         val allTogetherNow = rawResult.joinToString("")
