@@ -38,7 +38,7 @@ class LlamaWordAdder : WordAdder {
             
             AddBot: EARTH + WATER = MUD
             
-            If you can't figure out the answer, make a logical guess, no matter what. Do not add any notes, disclaimers or parentheticals. Just give the answer.
+            If you can't figure out the answer, make a logical guess, no matter what. Do not add any notes, disclaimers or parenthetical. Just give the answer. It should be one or two words maximum. NO EXPLANATION.
             
             User: $word1Upper + $word2Upper = ?
             AddBot: $word1Upper + $word2Upper =

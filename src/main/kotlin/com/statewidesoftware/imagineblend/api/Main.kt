@@ -15,7 +15,7 @@ import io.javalin.openapi.plugin.swagger.SwaggerPlugin
 
 fun main() {
 
-    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG")
+    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "TRACE")
     val logger = mu.KotlinLogging.logger {}
 
     Javalin.create { config ->
