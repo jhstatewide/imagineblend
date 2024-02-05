@@ -1,12 +1,16 @@
 {
   "scripts": {
     "copy-html": "ncp ./assets/html ./public",
-    "build": "esbuild assets/ts/index.ts --bundle --outfile=public/bundle.js --platform=node --target=es2020 && npm run copy-html"
+    "build": "esbuild assets/ts/index.ts --bundle --outfile=public/bundle.js --platform=node --target=es2020 && npm run copy-html",
+    "watch": "chokidar 'assets/**/*' -c 'npm run build'",
+    "start": "browser-sync start --server 'public' --files 'public'"
   },
   "dependencies": {
     "bootstrap": "^5.3.2"
   },
   "devDependencies": {
+    "browser-sync": "^3.0.2",
+    "chokidar-cli": "^3.0.0",
     "ncp": "^2.0.0"
   }
 }
