@@ -5,6 +5,9 @@ import { Signal, signal } from "@preact/signals";
 export class GameState {
     public defaultWords: string[] = ["fire", "water", "earth", "air"];
     public words: Signal<string[]>;
+    public word1: Signal<string> = signal("");
+    public word2: Signal<string> = signal("");
+    public answer: Signal<string> = signal("");
     constructor() {
         this.words = signal(this.defaultWords);
     }

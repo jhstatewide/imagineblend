@@ -36,6 +36,11 @@ fun main() {
         }
         config.registerPlugin(SwaggerPlugin())
         config.registerPlugin(ReDocPlugin())
+        config.bundledPlugins.enableCors { cors ->
+            cors.addRule {
+                it.anyHost()
+            }
+        }
         config.router.apiBuilder {
             path("/words") {
                 path("/add/{word1}/{word2}") {
