@@ -10,6 +10,10 @@ import de.kherud.llama.ModelParameters
 import mu.KotlinLogging
 import java.util.*
 
+fun String.myStrip(): String {
+    return this.replace("\n", " ").replace("\r", " ").replace("\t", " ").replace("  ", " ").trim()
+}
+
 
 class LlamaWordAdder : WordAdder {
 
@@ -27,11 +31,11 @@ class LlamaWordAdder : WordAdder {
     private lateinit var model: de.kherud.llama.LlamaModel
 
     override fun addWords(word1: String, word2: String): Result<String, GenerationError> {
-        // we want to force the case of the words to uppercase
-        val word1Upper = word1.uppercase(Locale.getDefault())
-        val word2Upper = word2.uppercase(Locale.getDefault())
+        val word1Upper = word1.uppercase(Locale.getDefault()).myStrip()
+        val word2Upper = word2.uppercase(Locale.getDefault()).myStrip()
+        logger.info { "Adding words: $word1Upper + $word2Upper..."}
         val prompt = """
-            You are AddBot. Your purpose is to add words together. You will get input like this:
+            You are AddBot. Your purpose is to add words together in the context of a fun 'alchemy' game. You will get input like this:
             
             User: EARTH + WATER = ?
             
@@ -39,7 +43,7 @@ class LlamaWordAdder : WordAdder {
             
             AddBot: EARTH + WATER = MUD
             
-            If you can't figure out the answer, make a logical guess, no matter what. Do not add any notes, disclaimers or parenthetical. Just give the answer. It should be one or two words maximum. NO EXPLANATION.
+            If you can't figure out the answer, make a logical or fanciful guess, no matter what. Do not add any notes, disclaimers or parenthetical. Just give the answer. It should be one or two words maximum. NO EXPLANATION. Do not reply with underscores either.
             
             User: $word1Upper + $word2Upper = ?
             AddBot: $word1Upper + $word2Upper =
@@ -53,7 +57,10 @@ class LlamaWordAdder : WordAdder {
             // let's map this sucker to a string
             val allTogetherNow = rawResult.joinToString("")
             logger.debug { "Raw result: $allTogetherNow" }
-            return Ok(allTogetherNow)
+            // search and replace underscores with spaces
+            val result = allTogetherNow.replace("_", " ")
+            logger.info { "$word1Upper + $word2Upper = $result" }
+            return Ok(result)
         } catch (e: Exception) {
             logger.error { "Error generating word: ${e.message}" }
             return Err(GenerationError("Error generating word: ${e.message}"))
