@@ -13,6 +13,7 @@
   "devDependencies": {
     "browser-sync": "^3.0.2",
     "chokidar-cli": "^3.0.0",
-    "ncp": "^2.0.0"
+    "ncp": "^2.0.0",
+    "preact": "^10.19.3"
   }
 }
