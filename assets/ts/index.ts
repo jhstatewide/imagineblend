@@ -61,6 +61,8 @@ const calculateButtonProps = {
             apiClient.addWords(word1, word2).then((result) => {
                 console.log("Got a result: ", result);
                 gameState.answer.value = result;
+                // also add the result to the word palette
+                gameState.words.value = gameState.words.value.concat([result]);
             }).catch((error) => {
                 console.log("Got an error: ", error);
                 gameState.answer.value = "ERROR";
