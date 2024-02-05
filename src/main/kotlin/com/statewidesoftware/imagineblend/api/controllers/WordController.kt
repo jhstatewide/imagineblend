@@ -30,12 +30,12 @@ object WordController {
         ],
         path = "/words/add/{word1}/{word2}"
     )
+    // TODO: i thought about this a lot and i think a LRU cache would work particularly well here
     fun addWords(ctx: Context) {
         logger.debug {  "WE WERE CALLED!!!" }
         val word1 = ctx.pathParam("word1")
         val word2 = ctx.pathParam("word2")
-        val result = wordAdder.addWords(word1, word2)
-        val resultAsString = when (result) {
+        val resultAsString = when (val result = wordAdder.addWords(word1, word2)) {
             is Ok -> result.value
             is Err -> result.error.message
         }

@@ -42,3 +42,6 @@ bin/
 .DS_Store
 
 /models/*.gguf
+
+/node_modules/
+/public/

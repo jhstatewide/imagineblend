@@ -1,5 +1,6 @@
 package com.statewidesoftware.imagineblend.llama
 
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.statewidesoftware.imagineblend.GenerationError
@@ -12,10 +13,10 @@ import java.util.*
 
 class LlamaWordAdder : WordAdder {
 
-    val logger = KotlinLogging.logger {}
+    private val logger = KotlinLogging.logger {}
 
     // need to do something smarter than this later... but for now, just to get it to compile
-    val modelParams = ModelParameters().setNGpuLayers(10)
+    val modelParams: ModelParameters = ModelParameters().setNGpuLayers(10)
     var inferParams: InferenceParameters = InferenceParameters()
         .setTemperature(0.7f)
         .setPenalizeNl(true)
@@ -47,11 +48,16 @@ class LlamaWordAdder : WordAdder {
         // set new seed
         val randomizedSeed = Random().nextInt()
         inferParams.setSeed(randomizedSeed)
-        val rawResult = model.generate(prompt, inferParams)
-        // let's map this sucker to a string
-        val allTogetherNow = rawResult.joinToString("")
-        logger.debug { "Raw result: $allTogetherNow" }
-        return Ok(allTogetherNow)
+        try {
+            val rawResult = model.generate(prompt, inferParams)
+            // let's map this sucker to a string
+            val allTogetherNow = rawResult.joinToString("")
+            logger.debug { "Raw result: $allTogetherNow" }
+            return Ok(allTogetherNow)
+        } catch (e: Exception) {
+            logger.error { "Error generating word: ${e.message}" }
+            return Err(GenerationError("Error generating word: ${e.message}"))
+        }
     }
 
     init {

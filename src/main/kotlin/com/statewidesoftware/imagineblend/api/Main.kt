@@ -5,6 +5,7 @@ import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
+import io.javalin.http.staticfiles.Location
 import io.javalin.openapi.OpenApiInfo
 import io.javalin.openapi.plugin.OpenApiConfiguration
 import io.javalin.openapi.plugin.OpenApiPlugin
@@ -19,12 +20,6 @@ fun main() {
     val logger = mu.KotlinLogging.logger {}
 
     Javalin.create { config ->
-
-//        val openAPIConfig = OpenApiConfiguration().apply {
-//            documentationPath = "/openapi"
-//            info.title = "ImagineBlend API"
-//        }
-
         config.registerPlugin(OpenApiPlugin { pluginConfig ->
             pluginConfig.withDefinitionConfiguration { version, definition ->
                 definition.withOpenApiInfo { info: OpenApiInfo ->
@@ -32,11 +27,19 @@ fun main() {
                 }
             }
         })
+        config.staticFiles.add { staticFiles ->
+            staticFiles.hostedPath = "/"                    // change to host files on a subpath, like '/assets'
+            staticFiles.directory = "public"               // the directory where your files are located
+            staticFiles.location = Location.EXTERNAL       // Location.CLASSPATH (jar) or Location.EXTERNAL (file system)
+            staticFiles.precompress = false                 // if the files should be pre-compressed and cached in memory (optimization)
+            staticFiles.aliasCheck = null                   // you can configure this to enable symlinks (= ContextHandler.ApproveAliases())
+        }
         config.registerPlugin(SwaggerPlugin())
         config.registerPlugin(ReDocPlugin())
         config.router.apiBuilder {
             path("/words") {
                 path("/add/{word1}/{word2}") {
+                    // TODO: some caching I guess???
                     get(WordController::addWords)
                 }
             }
