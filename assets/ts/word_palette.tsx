@@ -15,12 +15,17 @@ interface WordPaletteProps {
 
 export function WordPaletteComponent(props: WordPaletteProps) {
     // for each word we want a draggable badge
+    const handleDragStart = (e: DragEvent, word: string) => {
+        e.dataTransfer!.setData("text/plain", word);
+    }
+
     return (
         <div>
             {props.words.value.map((word) => {
                 return (
                     <span 
-                        draggable={true} 
+                        draggable={true}
+                        onDragStart={(e) => handleDragStart(e, word)}
                         style={{
                             display: 'inline-block',
                             padding: '5px 10px',
