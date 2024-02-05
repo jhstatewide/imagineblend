@@ -3,9 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import 'preact';
 
-import { renderMyComponent } from './my_component';
+import { GameState } from "./gamestate"; // Import the GameState class
 
-// Your TypeScript code here
-console.log('Hello from TypeScript?');
-renderMyComponent();
-alert("FUCK YOU");
+// make a new game state
+let gameState = new GameState();
+import "./word_palette";
+import { createComponents } from './word_palette';
+
+createComponents(gameState);

@@ -11,6 +11,7 @@
     "bootstrap": "^5.3.2"
   },
   "devDependencies": {
+    "@preact/signals": "^1.2.2",
     "browser-sync": "^3.0.2",
     "chokidar-cli": "^3.0.0",
     "ncp": "^2.0.0",
