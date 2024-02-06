@@ -37,10 +37,19 @@ class LlamaWordAdder : WordAdder {
         logger.info { "Adding words: $word1Upper + $word2Upper..."}
         val prompt = PromptGenerator.generatePrompt(modelPath, word1Upper, word2Upper)
 
+        val suffix = """
+            HAM + BURGER = ?
+            HAMBURGER
+            FREE + DOM = ?
+            FREEDOM
+            JELLY + BREAD = ?
+            JAM SANDWICH
+        """.trimIndent()
+
         // set new seed
         val randomizedSeed = Random().nextInt()
         inferParams.setSeed(randomizedSeed)
-        inferParams.setGrammar(grammar)
+        // inferParams.setGrammar(grammar)
         try {
             val rawResult = model.generate(prompt, inferParams)
             // let's map this sucker to a string
