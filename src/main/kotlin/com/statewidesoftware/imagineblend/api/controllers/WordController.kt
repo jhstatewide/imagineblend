@@ -55,11 +55,8 @@ object WordController {
                 }
             }
 
-            val resultAsString = when (val result = wordAdder.addWords(word1, word2)) {
-                is Ok -> result.value
-                is Err -> result.error.message
-            }
-            ctx.result(resultAsString)
+           ctx.status(500)
+           ctx.result("Error generating word!")
         }
     }
 
