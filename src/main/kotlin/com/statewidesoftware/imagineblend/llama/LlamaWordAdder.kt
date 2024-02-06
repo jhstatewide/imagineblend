@@ -34,20 +34,7 @@ class LlamaWordAdder : WordAdder {
         val word1Upper = word1.uppercase(Locale.getDefault()).myStrip()
         val word2Upper = word2.uppercase(Locale.getDefault()).myStrip()
         logger.info { "Adding words: $word1Upper + $word2Upper..."}
-        val prompt = """
-            You are AddBot. Your purpose is to add words together in the context of a fun 'alchemy' game. You will get input like this:
-            
-            User: EARTH + WATER = ?
-            
-            You will reply with ONLY the answer, like this:
-            
-            AddBot: EARTH + WATER = MUD
-            
-            If you can't figure out the answer, make a logical or fanciful guess, no matter what. Do not add any notes, disclaimers or parenthetical. Just give the answer. It should be one or two words maximum. NO EXPLANATION. Do not reply with underscores either.
-            
-            User: $word1Upper + $word2Upper = ?
-            AddBot: $word1Upper + $word2Upper =
-        """.trimIndent()
+        val prompt = promptForZephyr(word1Upper, word2Upper)
 
         // set new seed
         val randomizedSeed = Random().nextInt()
