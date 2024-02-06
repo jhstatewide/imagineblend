@@ -35,10 +35,12 @@ object WordController {
         logger.debug {  "WE WERE CALLED!!!" }
         val word1 = ctx.pathParam("word1")
         val word2 = ctx.pathParam("word2")
-        val resultAsString = when (val result = wordAdder.addWords(word1, word2)) {
-            is Ok -> result.value
-            is Err -> result.error.message
+        synchronized(wordAdder) {
+            val resultAsString = when (val result = wordAdder.addWords(word1, word2)) {
+                is Ok -> result.value
+                is Err -> result.error.message
+            }
+            ctx.result(resultAsString)
         }
-        ctx.result(resultAsString)
     }
 }

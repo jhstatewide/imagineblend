@@ -27,14 +27,15 @@ class LlamaWordAdder : WordAdder {
         .setMirostat(InferenceParameters.MiroStat.V2)
         .setAntiPrompt("\n")
 
-    private val modelPath = "./models/zephyr-7b-beta.Q6_K.gguf"
+    // private val modelPath = "./models/zephyr-7b-beta.Q6_K.gguf"
+    private val modelPath = "./models/mistral-7b-instruct-v0.2.Q5_K_M.gguf"
     private lateinit var model: de.kherud.llama.LlamaModel
 
     override fun addWords(word1: String, word2: String): Result<String, GenerationError> {
         val word1Upper = word1.uppercase(Locale.getDefault()).myStrip()
         val word2Upper = word2.uppercase(Locale.getDefault()).myStrip()
         logger.info { "Adding words: $word1Upper + $word2Upper..."}
-        val prompt = promptForZephyr(word1Upper, word2Upper)
+        val prompt = PromptGenerator.generatePrompt(modelPath, word1Upper, word2Upper)
 
         // set new seed
         val randomizedSeed = Random().nextInt()
