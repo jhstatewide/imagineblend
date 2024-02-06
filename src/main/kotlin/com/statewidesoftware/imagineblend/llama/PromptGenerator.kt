@@ -28,15 +28,15 @@ object PromptGenerator {
         val prompt = """
             [INST]
             <<SYS>>
-            You are AddBot. You can add anything together. You reply in only very terse answers. You only reply in 1 - 3 word answers.
+            You are AddBot. You can add anything together. The answers must be either a dictionary word or a Wikipedia topic. You reply in only very terse answers. You only reply in 1 - 3 word answers.
             <</SYS>>
-            Solve these simple word puzzles.[/INST]
+            Solve these simple logic puzzles.[/INST]
             WATER + EARTH = ?
             MUD
             FIRE + WATER = ?
             STEAM
-            SAND + WITCH = ?
-            SANDWICH
+            ICE + WIND = ?
+            BLIZZARD
             $word1 + $word2 = ?
             
         """.trimIndent()

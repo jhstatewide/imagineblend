@@ -36,11 +36,34 @@ object WordController {
         val word1 = ctx.pathParam("word1")
         val word2 = ctx.pathParam("word2")
         synchronized(wordAdder) {
+            // retry up to 3 times...
+            repeat(3) {
+                val result = wordAdder.addWords(word1, word2)
+                when (result) {
+                    is Ok -> {
+                        if (acceptableAnswer(result.value)) {
+                            ctx.result(result.value)
+                            return
+                        } else {
+                            logger.error { "Invalid word generated: ${result.value}" }
+                            logger.error { "This was attempted $it times" }
+                        }
+                    }
+                    is Err -> {
+                        logger.error { "Error generating word: ${result.error.message}" }
+                    }
+                }
+            }
+
             val resultAsString = when (val result = wordAdder.addWords(word1, word2)) {
                 is Ok -> result.value
                 is Err -> result.error.message
             }
             ctx.result(resultAsString)
         }
+    }
+
+    fun acceptableAnswer(answer: String): Boolean {
+        return answer.matches(Regex("[A-Z ]+"))
     }
 }

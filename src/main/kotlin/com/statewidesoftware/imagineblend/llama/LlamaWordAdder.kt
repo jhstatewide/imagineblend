@@ -17,6 +17,8 @@ fun String.myStrip(): String {
 
 class LlamaWordAdder : WordAdder {
 
+    private val rng = Random()
+
     private val logger = KotlinLogging.logger {}
 
     // need to do something smarter than this later... but for now, just to get it to compile
@@ -47,7 +49,7 @@ class LlamaWordAdder : WordAdder {
         """.trimIndent()
 
         // set new seed
-        val randomizedSeed = Random().nextInt()
+        val randomizedSeed = rng.nextInt()
         inferParams.setSeed(randomizedSeed)
         // inferParams.setGrammar(grammar)
         try {
