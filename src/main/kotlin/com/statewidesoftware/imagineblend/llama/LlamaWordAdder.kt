@@ -40,6 +40,7 @@ class LlamaWordAdder : WordAdder {
         // set new seed
         val randomizedSeed = Random().nextInt()
         inferParams.setSeed(randomizedSeed)
+        inferParams.setGrammar(grammar)
         try {
             val rawResult = model.generate(prompt, inferParams)
             // let's map this sucker to a string
