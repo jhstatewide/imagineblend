@@ -40,6 +40,13 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.32")
 }
 
+tasks.register<JavaExec>("runMainKt") {
+    group = "application"
+    // main = "com.statewidesoftware.imagineblend.api.MainKt"
+    mainClass = "com.statewidesoftware.imagineblend.api.MainKt"
+    classpath = sourceSets["main"].runtimeClasspath
+}
+
 tasks.test {
     useJUnitPlatform()
 }

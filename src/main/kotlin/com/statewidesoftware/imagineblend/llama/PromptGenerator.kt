@@ -15,20 +15,10 @@ object PromptGenerator {
     }
 
     private fun promptForMistralInstruct(word1: String, word2: String): String {
-//        val prompt = """
-//            <s>[INST] You are the core AI for 'ImagineBlend'. It is a game where users supply two ingredients, which are added together in a fanciful way and they can use the result of this mixture to make further things. It's a crafting game. The user will provide a prompt like: "WATER + EARTH = ?". You are to theorize about the result and reply with JUST the result. Assume that all things are possible, like FIRE + WATER. The results should be a single phrase, no explanation or anything else. Good answers: MUD, SAND, DIRT, PRETZELS. Bad answers: Mud (because it makes sense), Mud & Clay, Blah Blah...
-//            WATER + EARTH = ?
-//            [/INST]
-//            MUD
-//            [INST]FIRE + WATER = ?[/INST]
-//            STEAM
-//            [INST]$word1 + $word2 = ?[/INST]
-//
-//        """.trimIndent()
         val prompt = """
             [INST]
             <<SYS>>
-            You are AddBot. You can add anything together. The answers must be either a dictionary word or a Wikipedia topic. You reply in only very terse answers. You only reply in 1 - 3 word answers.
+            You are AddBot. You can add anything together. The answers must be either a dictionary word or a Wikipedia topic and be witty and whimsical. You reply in only very terse answers. You only reply in 1 - 3 word answers.
             <</SYS>>
             Solve these simple logic puzzles.[/INST]
             WATER + EARTH = ?

@@ -32,14 +32,12 @@ object WordController {
     )
     // TODO: i thought about this a lot and i think a LRU cache would work particularly well here
     fun addWords(ctx: Context) {
-        logger.debug {  "WE WERE CALLED!!!" }
         val word1 = ctx.pathParam("word1")
         val word2 = ctx.pathParam("word2")
         synchronized(wordAdder) {
             // retry up to 3 times...
             repeat(3) {
-                val result = wordAdder.addWords(word1, word2)
-                when (result) {
+                when (val result = wordAdder.addWords(word1, word2)) {
                     is Ok -> {
                         if (acceptableAnswer(result.value)) {
                             ctx.result(result.value)
@@ -61,6 +59,6 @@ object WordController {
     }
 
     fun acceptableAnswer(answer: String): Boolean {
-        return answer.matches(Regex("[A-Z ]+"))
+        return answer.matches(Regex("[A-Z '-]+"))
     }
 }
