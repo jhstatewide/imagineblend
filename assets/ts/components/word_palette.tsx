@@ -11,6 +11,7 @@ const defaultWords = [
 
 interface WordPaletteProps {
     words: Signal<string[]>;
+    gameState: GameState;
 }
 
 export function WordPaletteComponent(props: WordPaletteProps) {
@@ -19,13 +20,15 @@ export function WordPaletteComponent(props: WordPaletteProps) {
         e.dataTransfer!.setData("text/plain", word);
     }
 
+    function onClick(word: string) {
+        props.gameState.wordClicked(word);
+    };
+
     return (
         <div>
             {props.words.value.map((word) => {
                 return (
-                    <span 
-                        draggable={true}
-                        onDragStart={(e) => handleDragStart(e, word)}
+                    <button
                         style={{
                             display: 'inline-block',
                             padding: '5px 10px',
@@ -33,11 +36,11 @@ export function WordPaletteComponent(props: WordPaletteProps) {
                             backgroundColor: '#007bff',
                             color: 'white',
                             borderRadius: '20px',
-                            cursor: 'grab',
                         }}
+                        onClick={() => onClick(word)}
                     >
                         {word}
-                    </span>
+                    </button>
                 );
             })}
         </div>

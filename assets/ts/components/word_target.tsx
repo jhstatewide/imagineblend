@@ -6,26 +6,13 @@ import { GameState } from "../gamestate";
 import { useState } from "preact/hooks";
 
 interface WordTargetProps {
-    onDrop: (word: string) => void;
-    gameState: GameState;
+    word: Signal<string>;
 }
 
 export function WordTargetComponent(props: WordTargetProps) {
-    const [currentWord, setCurrentWord] = useState(null as string | null);
     return (
         <div 
-            onDrop={(e) => {
-                e.preventDefault();
-                if (e.dataTransfer) {
-                    let word = e.dataTransfer.getData("text/plain");
-                    console.log("dropped word", word);
-                    props.onDrop(word);
-                    setCurrentWord(word);
-                }
-            }}
-            onDragOver={(e) => {
-                e.preventDefault();
-            }}
+            
             style={{
                 border: '2px dashed #007bff',
                 padding: '10px',
@@ -34,7 +21,7 @@ export function WordTargetComponent(props: WordTargetProps) {
                 cursor: 'grab',
             }}
         >
-            {currentWord || "Drag and drop a word here"}
+            {props.word.value}
         </div>
     );
 }

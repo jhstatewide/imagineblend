@@ -15,13 +15,13 @@ export function GameArea(props: GameAreaProps) {
         <div className="game-area">
             <div class="row">
                 <div class="col-12">
-                    <WordPaletteComponent words={props.gameState.words} />
+                    <WordPaletteComponent words={props.gameState.words} gameState={props.gameState} />
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-3 ingredient-container">
-                    <WordTargetComponent gameState={props.gameState} onDrop={(word) => props.gameState.word1.value = word}></WordTargetComponent>
+                    <WordTargetComponent word={props.gameState.word1}></WordTargetComponent>
                 </div>
 
                 <div class="col-1 my-auto">
@@ -29,7 +29,7 @@ export function GameArea(props: GameAreaProps) {
                 </div>
 
                 <div class="col-3 ingredient-container">
-                    <WordTargetComponent gameState={props.gameState} onDrop={(word) => props.gameState.word2.value = word}></WordTargetComponent>
+                    <WordTargetComponent word={props.gameState.word2}></WordTargetComponent>
                 </div>
 
                 <div class="col-1 my-auto">
