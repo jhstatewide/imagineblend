@@ -1,10 +1,6 @@
 import { AddAPIClient } from "../api/add_api_client";
 import { GameState } from "../gamestate";
 
-function calculate() {
-    // Do something...
-}
-
 interface CalculateButtonProps {
     gameState: GameState;
 }

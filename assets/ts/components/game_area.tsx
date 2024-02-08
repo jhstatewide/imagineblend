@@ -10,45 +10,43 @@ interface GameAreaProps {
     gameState: GameState;
 }
 
-export class GameArea extends Component<GameAreaProps, any>{
-    render(props: GameAreaProps) {
-        return (
-            <div className="game-area">
-                <div class="row">
-                    <div class="col-12">
-                        <WordPaletteComponent words={props.gameState.words} />
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3 ingredient-container">
-                        <WordTargetComponent gameState={props.gameState} onDrop={ (word) => props.gameState.word1.value = word }></WordTargetComponent>
-                    </div>
-
-                    <div class="col-1">
-                        +
-                    </div>
-
-                    <div class="col-3 ingredient-container">
-                        <WordTargetComponent gameState={props.gameState} onDrop={ (word) => props.gameState.word2.value = word }></WordTargetComponent>
-                    </div>
-
-                    <div class="col-1">
-                        =
-                    </div>
-
-                    <div class="col-3">
-                        <AnswerArea gameState={props.gameState}></AnswerArea>
-                        <CalculateButton gameState={props.gameState} onClick={() => {}}></CalculateButton>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <GameStateRenderer gameState={props.gameState}></GameStateRenderer>
-                    </div>
+export function GameArea(props: GameAreaProps) {
+    return (
+        <div className="game-area">
+            <div class="row">
+                <div class="col-12">
+                    <WordPaletteComponent words={props.gameState.words} />
                 </div>
             </div>
-        );
-    }
+
+            <div class="row">
+                <div class="col-3 ingredient-container">
+                    <WordTargetComponent gameState={props.gameState} onDrop={(word) => props.gameState.word1.value = word}></WordTargetComponent>
+                </div>
+
+                <div class="col-1 my-auto">
+                    <span style={{textAlign: 'center', display: 'block'}}>+</span>
+                </div>
+
+                <div class="col-3 ingredient-container">
+                    <WordTargetComponent gameState={props.gameState} onDrop={(word) => props.gameState.word2.value = word}></WordTargetComponent>
+                </div>
+
+                <div class="col-1 my-auto">
+                    <span style={{textAlign: 'center', display: 'block'}}>=</span>
+                </div>
+
+                <div class="col-3">
+                    <AnswerArea gameState={props.gameState}></AnswerArea>
+                    <CalculateButton gameState={props.gameState}></CalculateButton>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <GameStateRenderer gameState={props.gameState}></GameStateRenderer>
+                </div>
+            </div>
+        </div>
+    );
 }
