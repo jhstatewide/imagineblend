@@ -38,13 +38,12 @@ export function GameArea(props: GameAreaProps) {
 
                 <div class="col-3">
                     <AnswerArea gameState={props.gameState}></AnswerArea>
-                    <CalculateButton gameState={props.gameState}></CalculateButton>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <GameStateRenderer gameState={props.gameState}></GameStateRenderer>
+                    <CalculateButton gameState={props.gameState}></CalculateButton>
                 </div>
             </div>
         </div>
