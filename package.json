@@ -3,8 +3,8 @@
     "copy-html": "ncp ./assets/html ./public",
     "watch": "chokidar 'assets/**/*' -c 'npm run build'",
     "start": "browser-sync start --server 'public' --files 'public'",
-    "build:css": "esbuild assets/css/local.css --bundle --outdir=public/",
-    "build:ts": "esbuild assets/ts/index.ts --bundle --outdir=public/ --platform=node --target=es2020",
+    "build:css": "esbuild assets/css/local.css --sourcemap --bundle --outdir=public/",
+    "build:ts": "esbuild assets/ts/index.ts --sourcemap --bundle --outdir=public/ --platform=node --target=es2020",
     "build": "npm run build:css && npm run build:ts && npm run copy-html"
   },
   "dependencies": {

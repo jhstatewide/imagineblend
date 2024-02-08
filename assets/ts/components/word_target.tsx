@@ -2,7 +2,7 @@
 // word palette onto it, it will display the word and allow us to drag it back to the word palette. It does this with browser drag and drop support
 
 import { Signal } from "@preact/signals";
-import { GameState } from "./gamestate";
+import { GameState } from "../gamestate";
 import { useState } from "preact/hooks";
 
 interface WordTargetProps {

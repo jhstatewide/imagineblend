@@ -1,5 +1,5 @@
 import { render } from "preact";
-import { GameState } from "./gamestate";
+import { GameState } from "../gamestate";
 import { Signal } from "@preact/signals";
 
 const defaultWords = [
