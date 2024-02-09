@@ -60,17 +60,6 @@ export function GameArea(props: GameAreaProps) {
             }
         };
 
-        eventSource.addEventListener('error', function (event) {
-            console.log('SSE error');
-            console.log(event);
-            // now be more descriptive
-            if (event.eventPhase === EventSource.CLOSED) {
-                console.log('SSE connection closed');
-            } else {
-                console.log('SSE connection error');
-            }
-        });
-
         eventSource.addEventListener('connected', function (event) {
             console.log('SSE connected');
             console.log(event);
@@ -107,7 +96,7 @@ export function GameArea(props: GameAreaProps) {
                     <span style={{ textAlign: 'center', display: 'block' }}>=</span>
                 </div>
 
-                <div class="col-3">
+                <div class="col-3 my-auto">
                     <AnswerArea gameState={props.gameState}></AnswerArea>
                 </div>
             </div>

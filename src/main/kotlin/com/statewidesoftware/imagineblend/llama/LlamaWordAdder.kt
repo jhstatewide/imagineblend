@@ -48,7 +48,7 @@ class LlamaWordAdder : WordAdder {
             val allTogetherNow = rawResult.joinToString("")
             logger.debug { "Raw result: $allTogetherNow" }
             // search and replace underscores with spaces
-            val result = allTogetherNow.replace("_", " ")
+            val result = allTogetherNow.replace("_", " ").uppercase(Locale.getDefault())
             logger.info { "$word1Upper + $word2Upper = $result" }
             return Ok(result)
         } catch (e: UnsupportedModelException) {

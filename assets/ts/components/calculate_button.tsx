@@ -14,6 +14,7 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
         if (word1 && word2) {
             console.log("Calculating...");
             gameState.answer.value = "Calculating...";
+            gameState.isThinking.value = true;
             let apiClient = new AddAPIClient();
             apiClient.addWords(word1, word2).then((result) => {
                 console.log("Got a result: ", result);
@@ -28,6 +29,8 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
             }).catch((error) => {
                 console.log("Got an error: ", error);
                 gameState.answer.value = "ERROR";
+            }).finally(() => {
+                gameState.isThinking.value = false;
             });
         }
     }

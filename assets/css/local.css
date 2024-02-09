@@ -1,3 +1,20 @@
 .ingredient-container {
     text-align: center;
 }
+
+@keyframes example {
+    from {background-color: red;}
+    to {background-color: yellow;}
+  }
+
+  @keyframes rock {
+    0% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    100% { transform: rotate(-5deg); }
+  
+  }
+
+.thinking-animation {
+    /* rock back and forth */
+    animation: example 1s infinite, rock 1s infinite;
+}

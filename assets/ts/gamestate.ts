@@ -5,6 +5,7 @@ import { Signal, signal } from "@preact/signals";
 export class GameState {
 
     private whichWord = 1;
+    isThinking: Signal<boolean> = signal(false);
 
     wordClicked(word: string) {
         if (this.whichWord == 1) {
@@ -16,7 +17,7 @@ export class GameState {
         }
     }
 
-    public defaultWords: string[] = ["fire", "water", "earth", "air", "sun"];
+    public defaultWords: string[] = ["FIRE", "WATER", "EARTH", "AIR", "SUN"];
     public words: Signal<string[]>;
     public word1: Signal<string> = signal("");
     public word2: Signal<string> = signal("");
