@@ -13,7 +13,7 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
         let word2 = gameState.word2.value;
         if (word1 && word2) {
             console.log("Calculating...");
-            gameState.answer.value = "SNEED";
+            gameState.answer.value = "Calculating...";
             let apiClient = new AddAPIClient();
             apiClient.addWords(word1, word2).then((result) => {
                 console.log("Got a result: ", result);
