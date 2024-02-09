@@ -28,26 +28,23 @@ export function WordPaletteComponent(props: WordPaletteProps) {
         <div>
             {props.words.value.map((word) => {
                 return (
-                    <button
-                        style={{
-                            display: 'inline-block',
-                            padding: '5px 10px',
-                            margin: '5px',
-                            backgroundColor: '#007bff',
-                            color: 'white',
-                            borderRadius: '20px',
-                        }}
-                        onClick={() => onClick(word)}
-                    >
-                        {word}
-                    </button>
+                    
+                        <button
+                            style={{
+                                display: 'inline-block',
+                                padding: '5px 10px',
+                                margin: '5px',
+                                backgroundColor: '#007bff',
+                                color: 'white',
+                                borderRadius: '20px',
+                            }}
+                            onClick={() => onClick(word)}
+                        >
+                            {word}
+                        </button>
+                  
                 );
             })}
         </div>
     );
-}
-
-export function createComponents(gameState: GameState) {
-    let targetElement = document.querySelector("#word-palette");
-    render(<WordPaletteComponent words={gameState.words} />, targetElement!);
 }

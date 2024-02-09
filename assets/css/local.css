@@ -18,3 +18,7 @@
     /* rock back and forth */
     animation: example 1s infinite, rock 1s infinite;
 }
+
+.answer-area {
+    text-align: center;
+}
