@@ -39,6 +39,10 @@ dependencies {
     implementation("org.slf4j:slf4j-api:1.7.32")
     implementation("org.slf4j:slf4j-simple:1.7.32")
     implementation("org.kodein.di:kodein-di:7.21.1")
+
+    implementation("com.mayakapps.kache:kache:2.1.0-beta05")
+    // add kotlin coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 }
 
 tasks.register<JavaExec>("runMainKt") {
