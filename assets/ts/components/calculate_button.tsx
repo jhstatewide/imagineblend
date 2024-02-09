@@ -14,9 +14,17 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
         if (word1 && word2) {
             console.log("Calculating...");
             gameState.answer.value = "Calculating...";
+
+            // disable the button while we're thinking
+
+
             gameState.isThinking.value = true;
             let apiClient = new AddAPIClient();
-            apiClient.addWords(word1, word2).then((result) => {
+
+            let apiCall = apiClient.addWords(word1, word2);
+            let delay = new Promise(resolve => setTimeout(resolve, 1500));
+
+            Promise.all([apiCall, delay]).then(([result]) => {
                 console.log("Got a result: ", result);
                 gameState.answer.value = result;
                 // also add the result to the word palette
@@ -36,6 +44,6 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
     }
 
     return (
-        <button onClick={onClick}>Calculate</button>
+        <button disabled={calculateButtonProps.gameState.isThinking} onClick={onClick} className="btn btn-primary btn-lg btn-block">Calculate</button>
     );
 }
