@@ -16,10 +16,10 @@ dependencies {
     // we need some 'result' implementation
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.18")
     // pull in javalin
-    implementation("io.javalin:javalin-bundle:6.0.0")
-    implementation("io.javalin.community.openapi:javalin-openapi-plugin:6.0.0")
-    implementation("io.javalin.community.openapi:javalin-swagger-plugin:6.0.0")
-    implementation("io.javalin.community.openapi:javalin-redoc-plugin:6.0.0")
+    implementation("io.javalin:javalin-bundle:6.0.1")
+    implementation("io.javalin.community.openapi:javalin-openapi-plugin:6.0.1")
+    implementation("io.javalin.community.openapi:javalin-swagger-plugin:6.0.1")
+    implementation("io.javalin.community.openapi:javalin-redoc-plugin:6.0.1")
     implementation("org.webjars.npm:redoc:2.0.0")
     implementation("org.webjars.npm:js-tokens:8.0.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22")
@@ -38,6 +38,7 @@ dependencies {
     // now pull in slf4j
     implementation("org.slf4j:slf4j-api:1.7.32")
     implementation("org.slf4j:slf4j-simple:1.7.32")
+    implementation("org.kodein.di:kodein-di:7.21.1")
 }
 
 tasks.register<JavaExec>("runMainKt") {

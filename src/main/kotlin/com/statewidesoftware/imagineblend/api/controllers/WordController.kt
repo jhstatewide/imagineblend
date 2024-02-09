@@ -2,18 +2,23 @@ package com.statewidesoftware.imagineblend.api.controllers
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.statewidesoftware.imagineblend.EventBroadcaster
 import com.statewidesoftware.imagineblend.WordAdder
+import com.statewidesoftware.imagineblend.di
 import com.statewidesoftware.imagineblend.llama.LlamaWordAdder
 import io.javalin.http.Context
 import io.javalin.openapi.HttpMethod
 import io.javalin.openapi.OpenApi
 import io.javalin.openapi.OpenApiParam
 import io.javalin.openapi.OpenApiResponse
+import org.kodein.di.instance
 
 object WordController {
 
     val wordAdder: WordAdder = LlamaWordAdder()
     val logger = mu.KotlinLogging.logger {}
+
+    private val eventBroadcaster : EventBroadcaster by di.instance<EventBroadcaster>()
 
     @OpenApi(
         summary = "Generate a word from two words",
@@ -37,9 +42,12 @@ object WordController {
         synchronized(wordAdder) {
             // retry up to 3 times...
             repeat(3) {
+                logger.info { "Generating word from $word1 and $word2!" }
+                eventBroadcaster.broadcast("Generating word from $word1 and $word2!")
                 when (val result = wordAdder.addWords(word1, word2)) {
                     is Ok -> {
                         if (acceptableAnswer(result.value)) {
+                            eventBroadcaster.broadcast("Generated word: $word1 + $word2 = ${result.value}")
                             ctx.result(result.value)
                             return
                         } else {
