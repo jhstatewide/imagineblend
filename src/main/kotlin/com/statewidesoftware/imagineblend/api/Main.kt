@@ -49,7 +49,7 @@ fun main() {
                 }
             }
         }
-    }.start(7002)
+    }.start(50123)
 
     logger.info { "Check out ReDoc docs at http://localhost:7002/redoc" }
     logger.info { "Check out Swagger UI docs at http://localhost:7002/swagger" }
