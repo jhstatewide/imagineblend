@@ -19,6 +19,7 @@ export function WordTargetComponent(props: WordTargetProps) {
                 margin: '10px',
                 textAlign: 'center',
                 cursor: 'grab',
+                minHeight: '3em'
             }}
         >
             {props.word.value}

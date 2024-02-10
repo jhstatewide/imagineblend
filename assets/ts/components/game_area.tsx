@@ -80,23 +80,23 @@ export function GameArea(props: GameAreaProps) {
             </div>
 
             <div class="row">
-                <div class="col-3 ingredient-container">
+                <div class="col-3-lg col-12-xs ingredient-container">
                     <WordTargetComponent word={props.gameState.word1}></WordTargetComponent>
                 </div>
 
-                <div class="col-1 my-auto">
+                <div class="col-1-lg col-12-xs my-auto">
                     <span style={{ textAlign: 'center', display: 'block' }}>+</span>
                 </div>
 
-                <div class="col-3 ingredient-container">
+                <div class="col-3-lg col-12-xs ingredient-container">
                     <WordTargetComponent word={props.gameState.word2}></WordTargetComponent>
                 </div>
 
-                <div class="col-1 my-auto">
+                <div class="col-1-lg col-12-xs my-auto">
                     <span style={{ textAlign: 'center', display: 'block' }}>=</span>
                 </div>
 
-                <div class="col-3 my-auto">
+                <div class="col-3-lg col-12-xs my-auto">
                     <AnswerArea gameState={props.gameState}></AnswerArea>
                 </div>
             </div>

@@ -44,6 +44,6 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
     }
 
     return (
-        <button disabled={calculateButtonProps.gameState.isThinking} onClick={onClick} className="btn btn-primary btn-lg btn-block">Calculate</button>
+        <button style={{'width': '100%'}} disabled={calculateButtonProps.gameState.isThinking} onClick={onClick} className="btn btn-primary btn-lg btn-block">Mix</button>
     );
 }

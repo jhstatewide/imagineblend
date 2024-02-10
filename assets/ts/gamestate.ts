@@ -24,5 +24,6 @@ export class GameState {
     public answer: Signal<string> = signal("");
     constructor() {
         this.words = signal(this.defaultWords);
+        this.answer.value = "???";
     }
 }
