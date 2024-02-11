@@ -15,9 +15,21 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
             console.log("Calculating...");
             gameState.answer.value = "Calculating...";
 
+            // try to emit a google analytics event using gtag
+            try {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'calculate', {
+                        'event_category': 'calculate',
+                        'event_label': 'calculate',
+                        'word1': word1,
+                        'word2': word2
+                    });
+                }
+            } catch (e) {
+                console.log("Error sending gtag event: ", e);
+            }
+
             // disable the button while we're thinking
-
-
             gameState.isThinking.value = true;
             let apiClient = new AddAPIClient();
 
