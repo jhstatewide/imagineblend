@@ -1,5 +1,6 @@
 import { AddAPIClient } from "../api/add_api_client";
 import { GameState } from "../gamestate";
+import { isMobile } from "../utils";
 
 interface CalculateButtonProps {
     gameState: GameState;
@@ -45,6 +46,11 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
                     console.log("Word already exists, not adding");
                 } else {
                     gameState.words.value = gameState.words.value.concat([result]);
+                    if (isMobile()) {
+                        console.log("Scrolling to the bottom of the page!")
+                        // scroll the window down as far as it will go
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }
                 }
             }).catch((error) => {
                 console.log("Got an error: ", error);

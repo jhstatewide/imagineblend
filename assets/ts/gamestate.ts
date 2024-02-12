@@ -17,7 +17,17 @@ export class GameState {
         }
     }
 
-    public defaultWords: string[] = ["FIRE", "WATER", "EARTH", "AIR", "SUN"];
+    mockedLargeDefaultWordList(): string[] {
+        let words = [];
+        for (let i = 0; i < 100; i++) {
+            words.push("word" + i);
+        }
+        return words;
+    }
+
+    // public defaultWords: string[] = ["FIRE", "WATER", "EARTH", "AIR", "SUN"];
+    public defaultWords: string[] = this.mockedLargeDefaultWordList();
+    
     public words: Signal<string[]>;
     public word1: Signal<string> = signal("");
     public word2: Signal<string> = signal("");
