@@ -4,7 +4,7 @@
     "watch": "chokidar 'assets/**/*' -c 'npm run build'",
     "start": "browser-sync start --server 'public' --files 'public'",
     "build:css": "esbuild assets/css/local.css --sourcemap --bundle --outdir=public/",
-    "build:ts": "esbuild assets/ts/index.ts --sourcemap --bundle --outdir=public/ --platform=node --target=es2020",
+    "build:ts": "node build.mjs",
     "build": "npm run build:css && npm run build:ts && npm run copy-html"
   },
   "dependencies": {
@@ -14,6 +14,8 @@
     "@preact/signals": "^1.2.2",
     "browser-sync": "^3.0.2",
     "chokidar-cli": "^3.0.0",
+    "dotenv": "^16.4.2",
+    "esbuild": "^0.20.0",
     "ncp": "^2.0.0",
     "preact": "^10.19.3"
   }

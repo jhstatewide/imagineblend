@@ -38,10 +38,30 @@ export function GameArea(props: GameAreaProps) {
     const [messages, setMessages] = useState<string[]>([]);
     const broadcastMessageBuffer = new BroadcastMessageBuffer();
 
+    function sseSource(): EventSource {
+        // OK, we are using esbuild to set a global called API_HOST
+        // it can be either undefined or DEFAULT_ORIGIN. if it's default origin, just return
+        // new EventSource('/sse'), otherwise look at window.origin to see if we are http or https
+        // then build the URL like "$protocol://$API_HOST/sse"
+        if (API_HOST === undefined || API_HOST === "DEFAULT_ORIGIN") {
+            console.log("Returning EventSource('/sse')")
+            return new EventSource('/sse');
+        } else {
+            console.log("Returning EventSource with protocol and API_HOST");
+            if (window.location.protocol === 'http:') {
+                console.log("Returning EventSource with http");
+                return new EventSource(`http://${API_HOST}/sse`);
+            } else {
+                console.log("Returning EventSource with https");
+                return new EventSource(`https://${API_HOST}/sse`);
+            }
+        }
+    }
+
     useEffect(() => {
         // add SSE listener
-        console.log("Registering SSE listener");
-        const eventSource = new EventSource('/sse');
+        console.log("Registering SSE listener!");
+        const eventSource = sseSource();
 
         eventSource.onmessage = function (event) {
             console.log('SSE event received');
@@ -103,13 +123,13 @@ export function GameArea(props: GameAreaProps) {
 
             <div class="row">
                 <div class="col-12">
-                    <CalculateButton gameState={props.gameState}></CalculateButton>
+                    <MessageList messages={broadcastMessageBuffer.getMessages()}></MessageList>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <MessageList messages={broadcastMessageBuffer.getMessages()}></MessageList>
+                    <CalculateButton gameState={props.gameState}></CalculateButton>
                 </div>
             </div>
         </div>
