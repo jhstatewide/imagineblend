@@ -25,8 +25,8 @@ export class GameState {
         return words;
     }
 
-    // public defaultWords: string[] = ["FIRE", "WATER", "EARTH", "AIR", "SUN"];
-    public defaultWords: string[] = this.mockedLargeDefaultWordList();
+    public defaultWords: string[] = ["FIRE", "WATER", "EARTH", "AIR", "SUN"];
+    // public defaultWords: string[] = this.mockedLargeDefaultWordList();
     
     public words: Signal<string[]>;
     public word1: Signal<string> = signal("");

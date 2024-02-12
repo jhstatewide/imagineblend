@@ -21,3 +21,12 @@
 .answer-area {
     text-align: center;
 }
+
+.word-target {
+  border: 2px dashed #007bff;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  min-height: 3em;
+  word-wrap: break-word;
+}

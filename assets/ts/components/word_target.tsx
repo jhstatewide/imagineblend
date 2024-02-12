@@ -12,15 +12,7 @@ interface WordTargetProps {
 export function WordTargetComponent(props: WordTargetProps) {
     return (
         <div 
-            
-            style={{
-                border: '2px dashed #007bff',
-                padding: '10px',
-                margin: '10px',
-                textAlign: 'center',
-                cursor: 'grab',
-                minHeight: '3em'
-            }}
+            className="word-target"  
         >
             {props.word.value}
         </div>
