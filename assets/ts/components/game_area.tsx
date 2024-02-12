@@ -7,7 +7,6 @@ import { GameStateRenderer } from './game_state_renderer';
 import { MessageList } from './message_list';
 import { CalculateButton } from './calculate_button';
 import { Signal, signal } from '@preact/signals';
-
 interface GameAreaProps {
     gameState: GameState;
 }
@@ -91,14 +90,19 @@ export function GameArea(props: GameAreaProps) {
         };
     });
 
+    function isMobile(): boolean {
+        const userAgent = navigator.userAgent.toLowerCase();
+        return /mobile|android|iphone|ipad|iemobile|wpdesktop/i.test(userAgent);
+    }
+
     return (
         <div className="game-area">
+
             <div class="row">
                 <div class="col-12">
-                    <WordPaletteComponent words={props.gameState.words} gameState={props.gameState} />
+                    <MessageList messages={broadcastMessageBuffer.getMessages()}></MessageList>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-3-lg col-12-xs ingredient-container">
                     <WordTargetComponent word={props.gameState.word1}></WordTargetComponent>
@@ -121,15 +125,18 @@ export function GameArea(props: GameAreaProps) {
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" style={{paddingBottom: "100px"}}>
                 <div class="col-12">
-                    <MessageList messages={broadcastMessageBuffer.getMessages()}></MessageList>
+                    <WordPaletteComponent words={props.gameState.words} gameState={props.gameState} />
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <CalculateButton gameState={props.gameState}></CalculateButton>
+            <div className={`game-area ${isMobile() ? 'fixed-bottom' : ''}`}>
+                {/* ... */}
+                <div className="row">
+                    <div className="col-12">
+                        <CalculateButton gameState={props.gameState}></CalculateButton>
+                    </div>
                 </div>
             </div>
         </div>
