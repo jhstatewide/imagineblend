@@ -5,7 +5,7 @@ export function AnswerArea(props: { gameState: GameState }) {
   const isThinking = props.gameState.isThinking;
 
   return (
-    <div className="answer-area" style={{minHeight: '3em'}}>
+    <div className="answer-area">
       {isThinking.value ? (
         <span className="thinking-animation" style={{display: 'block'}}>Thinking...</span>
       ) : (

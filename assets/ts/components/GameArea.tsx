@@ -73,24 +73,24 @@ export function GameArea(props: GameAreaProps) {
                     <MessageList messages={broadcastMessageBuffer.getMessages()}></MessageList>
                 </div>
             </div>
-            <div class="row sticky-top" style={{backgroundColor: 'white'}}>
-                <div class="col-3-lg col-12-xs ingredient-container">
+            <div class="row sticky-top" style={{backgroundColor: 'white', paddingBottom: "1em"}}>
+                <div class="col-lg-3 col-sm-3 col-xs-12 ingredient-container">
                     <WordTargetComponent word={props.gameState.word1}></WordTargetComponent>
                 </div>
 
-                <div class="col-1-lg col-12-xs my-auto">
+                <div className="col-lg-1 col-sm-1 col-xs-12 my-auto">
                     <span style={{ textAlign: 'center', display: 'block' }}>+</span>
                 </div>
 
-                <div class="col-3-lg col-12-xs ingredient-container">
+                <div className="col-lg-3 col-sm-3 col-xs-12 ingredient-container">
                     <WordTargetComponent word={props.gameState.word2}></WordTargetComponent>
                 </div>
 
-                <div class="col-1-lg col-12-xs my-auto">
+                <div className="col-lg-1 col-sm-1 col-xs-12 my-auto">
                     <span style={{ textAlign: 'center', display: 'block' }}>=</span>
                 </div>
 
-                <div class="col-3-lg col-12-xs my-auto">
+                <div className="col-lg-3 col-sm-3 col-xs-12 my-auto">
                     <AnswerArea gameState={props.gameState}></AnswerArea>
                 </div>
             </div>
