@@ -43,11 +43,10 @@ object WordController {
             // retry up to 3 times...
             repeat(3) {
                 logger.info { "Generating word from $word1 and $word2!" }
-                eventBroadcaster.broadcast("Generating word from $word1 and $word2!")
                 when (val result = wordAdder.addWords(word1, word2)) {
                     is Ok -> {
                         if (acceptableAnswer(result.value)) {
-                            eventBroadcaster.broadcast("Generated word: $word1 + $word2 = ${result.value}")
+                            eventBroadcaster.broadcast("$word1 + $word2 = ${result.value}")
                             ctx.result(result.value)
                             return
                         } else {
@@ -56,6 +55,7 @@ object WordController {
                         }
                     }
                     is Err -> {
+                        eventBroadcaster.broadcast("$word1 + $word2 = ERROR!");
                         logger.error { "Error generating word: ${result.error.message}" }
                     }
                 }
