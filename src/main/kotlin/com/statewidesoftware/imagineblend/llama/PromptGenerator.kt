@@ -40,6 +40,7 @@ object PromptGenerator {
             SUMMER - WINTER = ?
             WARMTH
             $word1 $stringForOperator $word2 = ?
+            
         """.trimIndent()
     }
 
