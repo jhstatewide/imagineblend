@@ -25,7 +25,6 @@ class LlamaWordCombiner : WordCombiner {
     }
 
     private val rng = Random()
-
     private val logger = KotlinLogging.logger {}
 
     // need to do something smarter than this later... but for now, just to get it to compile
