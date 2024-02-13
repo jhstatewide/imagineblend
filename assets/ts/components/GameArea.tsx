@@ -93,14 +93,12 @@ export function GameArea(props: GameAreaProps) {
 
                 <div className="col-lg-1 col-sm-1 col-xs-12 my-auto">
                     <div style={{ textAlign: 'center', display: 'block' }}>
-                        <input type="radio" id="add" name="operator" value="add"
-                            checked={operator === 'add'}
-                            onChange={(e) => e.target && setOperator((e.target as HTMLInputElement).value)} />
-                        <label htmlFor="add">+</label><br />
-                        <input type="radio" id="subtract" name="operator" value="subtract"
-                            checked={operator === 'subtract'}
-                            onChange={(e) => e.target && setOperator((e.target as HTMLInputElement).value)} />
-                        <label htmlFor="subtract">-</label>
+                        <select value={operator} 
+                                onChange={(e) => e.target && setOperator((e.target as HTMLInputElement).value)} 
+                                style={{ fontSize: '2em', fontFamily: 'monospace', display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                            <option value="add">+</option>
+                            <option value="subtract">-</option>
+                        </select>
                     </div>
                 </div>
 
@@ -109,7 +107,7 @@ export function GameArea(props: GameAreaProps) {
                 </div>
 
                 <div className="col-lg-1 col-sm-1 col-xs-12 my-auto">
-                    <span style={{ textAlign: 'center', display: 'block' }}>=</span>
+                    <span style={{ fontSize: '2em', fontFamily: 'monospace', display: 'inline-block', width: '100%', textAlign: 'center' }}>=</span>
                 </div>
 
                 <div className="col-lg-3 col-sm-3 col-xs-12 my-auto">
