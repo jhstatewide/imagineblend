@@ -3,9 +3,9 @@ package com.statewidesoftware.imagineblend.api.controllers
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.statewidesoftware.imagineblend.EventBroadcaster
-import com.statewidesoftware.imagineblend.WordAdder
+import com.statewidesoftware.imagineblend.WordCombiner
 import com.statewidesoftware.imagineblend.di
-import com.statewidesoftware.imagineblend.llama.LlamaWordAdder
+import com.statewidesoftware.imagineblend.llama.LlamaWordCombiner
 import io.javalin.http.Context
 import io.javalin.openapi.HttpMethod
 import io.javalin.openapi.OpenApi
@@ -15,8 +15,8 @@ import org.kodein.di.instance
 
 object WordController {
 
-    val wordAdder: WordAdder = LlamaWordAdder()
-    val logger = mu.KotlinLogging.logger {}
+    private val wordCombiner: WordCombiner = LlamaWordCombiner()
+    private val logger = mu.KotlinLogging.logger {}
 
     private val eventBroadcaster : EventBroadcaster by di.instance<EventBroadcaster>()
 
@@ -39,11 +39,11 @@ object WordController {
     fun addWords(ctx: Context) {
         val word1 = ctx.pathParam("word1")
         val word2 = ctx.pathParam("word2")
-        synchronized(wordAdder) {
+        synchronized(wordCombiner) {
             // retry up to 3 times...
             repeat(3) {
                 logger.info { "Generating word from $word1 and $word2!" }
-                when (val result = wordAdder.addWords(word1, word2)) {
+                when (val result = wordCombiner.addWords(word1, word2)) {
                     is Ok -> {
                         if (acceptableAnswer(result.value)) {
                             eventBroadcaster.broadcast("$word1 + $word2 = ${result.value}")
@@ -66,7 +66,7 @@ object WordController {
         }
     }
 
-    fun acceptableAnswer(answer: String): Boolean {
+    private fun acceptableAnswer(answer: String): Boolean {
         return answer.matches(Regex("[A-Z '-]+"))
     }
 }

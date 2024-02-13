@@ -4,7 +4,7 @@ class UnsupportedModelException(message: String) : Exception(message)
 
 object PromptGenerator {
     @Throws(UnsupportedModelException::class)
-    fun generatePrompt(model: String, word1: String, word2: String): String {
+    fun generateAddPrompt(model: String, word1: String, word2: String): String {
         if (model == "./models/zephyr-7b-beta.Q6_K.gguf") {
             return promptForZephyr(word1, word2)
         }
@@ -49,5 +49,51 @@ object PromptGenerator {
                 AddBot: $word1 + $word2 =
             """.trimIndent()
         return prompt
+    }
+
+    // let's work similarly to the mistral add prompt, except it's the logical inverse
+    fun generateSubtractPrompt(modelPath: String, word1Upper: String, word2Upper: String): String? {
+        if (modelPath == "./models/zephyr-7b-beta.Q6_K.gguf") {
+            return promptForZephyrSubtract(word1Upper, word2Upper)
+        }
+        if (modelPath == "./models/mistral-7b-instruct-v0.2.Q5_K_M.gguf") {
+            return promptForMistralInstructSubtract(word1Upper, word2Upper)
+        }
+        return null
+    }
+
+    private fun promptForMistralInstructSubtract(word1Upper: String, word2Upper: String): String? {
+        return """
+            [INST]
+            <<SYS>>
+            You are SubtractBot. You can subtract anything together. The answers must be either a dictionary word or a Wikipedia topic and be witty and whimsical. You reply in only very terse answers. You only reply in 1 - 3 word answers.
+            <</SYS>>
+            Solve these simple logic puzzles.[/INST]
+            WATER - EARTH = ?
+            WAVES
+            FIRE - WATER = ?
+            ASH
+            ICE - WIND = ?
+            MELT
+            $word1Upper - $word2Upper = ?
+            
+        """.trimIndent()
+    }
+
+    private fun promptForZephyrSubtract(word1Upper: String, word2Upper: String): String? {
+        return """
+            You are SubtractBot. Your purpose is to subtract words together in the context of a fun 'alchemy' game. You will get input like this:
+            
+            User: EARTH - WATER = ?
+            
+            You will reply with ONLY the answer, like this:
+            
+            SubtractBot: EARTH - WATER = MUD
+            
+            If you can't figure out the answer, make a logical or fanciful guess, no matter what. Do not add any notes, disclaimers or parenthetical. Just give the answer. It should be one or two words maximum. NO EXPLANATION. Do not reply with underscores either.
+            
+            User: $word1Upper - $word2Upper = ?
+            SubtractBot: $word1Upper - $word2Upper =
+        """.trimIndent()
     }
 }

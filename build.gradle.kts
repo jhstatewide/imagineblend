@@ -47,7 +47,6 @@ dependencies {
 
 tasks.register<JavaExec>("runMainKt") {
     group = "application"
-    // main = "com.statewidesoftware.imagineblend.api.MainKt"
     mainClass = "com.statewidesoftware.imagineblend.api.MainKt"
     classpath = sourceSets["main"].runtimeClasspath
 }
