@@ -54,7 +54,7 @@ class LlamaWordCombiner : WordCombiner {
 
             logger.info { "Adding words: $word1Upper + $word2Upper..."}
             try {
-                val prompt = PromptGenerator.generateAddPrompt(modelPath, word1Upper, word2Upper)
+                val prompt = PromptGenerator.generateMultiModePrompt(modelPath, word1Upper, word2Upper, WordOperator.ADD)
                 // set new seed
                 val randomizedSeed = rng.nextInt()
                 inferParams.setSeed(randomizedSeed)
@@ -96,7 +96,7 @@ class LlamaWordCombiner : WordCombiner {
 
             logger.info { "Removing words: $word1Upper - $word2Upper..."}
             try {
-                val prompt = PromptGenerator.generateSubtractPrompt(modelPath, word1Upper, word2Upper)
+                val prompt = PromptGenerator.generateMultiModePrompt(modelPath, word1Upper, word2Upper, WordOperator.SUBTRACT)
                 // set new seed
                 val randomizedSeed = rng.nextInt()
                 inferParams.setSeed(randomizedSeed)

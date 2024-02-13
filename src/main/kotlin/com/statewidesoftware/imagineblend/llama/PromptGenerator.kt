@@ -2,19 +2,59 @@ package com.statewidesoftware.imagineblend.llama
 
 class UnsupportedModelException(message: String) : Exception(message)
 
+enum class WordOperator {
+    ADD,
+    SUBTRACT
+}
+
 object PromptGenerator {
+
+    @Throws(UnsupportedModelException::class)
+    fun generateMultiModePrompt(model: String, word1: String, word2: String, operator: WordOperator): String {
+        if (operator == WordOperator.ADD) {
+            return genericPrompt(model, operator, word1, word2)
+        }
+        throw UnsupportedModelException("Model $model is not supported")
+    }
+
+    private fun genericPrompt(model: String, operator: WordOperator, word1: String, word2: String): String {
+        val stringForOperator = when (operator) {
+            WordOperator.ADD -> "+"
+            WordOperator.SUBTRACT -> "-"
+        }
+
+        return """
+            [INST]
+            <<SYS>>
+            You are CalcBot, equipped to perform both additive (+) and subtractive (-) combinations. Your responses must align with dictionary words or Wikipedia topics, delivered with wit and whimsy in very concise form, ranging from 1 to 3 words.
+            <</SYS>>
+            Engage with these logic puzzles.[/INST]
+            WATER + EARTH = ?
+            MUD
+            FIRE + WATER = ?
+            STEAM
+            ICE + WIND = ?
+            BLIZZARD
+            DAY - NIGHT = ?
+            LIGHT
+            SUMMER - WINTER = ?
+            WARMTH
+            $word1 $stringForOperator $word2 = ?
+        """.trimIndent()
+    }
+
     @Throws(UnsupportedModelException::class)
     fun generateAddPrompt(model: String, word1: String, word2: String): String {
         if (model == "./models/zephyr-7b-beta.Q6_K.gguf") {
             return promptForZephyr(word1, word2)
         }
         if (model == "./models/mistral-7b-instruct-v0.2.Q5_K_M.gguf") {
-            return promptForMistralInstruct(word1, word2)
+            return promptForMistralInstructAdd(word1, word2)
         }
         throw UnsupportedModelException("Model $model is not supported")
     }
 
-    private fun promptForMistralInstruct(word1: String, word2: String): String {
+    private fun promptForMistralInstructAdd(word1: String, word2: String): String {
         val prompt = """
             [INST]
             <<SYS>>
