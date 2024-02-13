@@ -14,6 +14,9 @@ object PromptGenerator {
         if (operator == WordOperator.ADD) {
             return genericPrompt(model, operator, word1, word2)
         }
+        if (operator == WordOperator.SUBTRACT) {
+            return genericPrompt(model, operator, word1, word2)
+        }
         throw UnsupportedModelException("Model $model is not supported")
     }
 
