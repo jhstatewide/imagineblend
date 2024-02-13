@@ -1,4 +1,4 @@
-import { AddAPIClient } from "../api/add_api_client";
+import { ImagineBlendAPIClient, WordOperator } from "../api/imagineblend_api_client";
 import { GameState } from "../gamestate";
 import { isMobile } from "../utils";
 
@@ -32,9 +32,9 @@ export function CalculateButton(calculateButtonProps: CalculateButtonProps) {
 
             // disable the button while we're thinking
             gameState.isThinking.value = true;
-            let apiClient = new AddAPIClient();
+            let apiClient = new ImagineBlendAPIClient();
 
-            let apiCall = apiClient.addWords(word1, word2);
+            let apiCall = gameState.operator.value === WordOperator.ADD ? apiClient.addWords(word1, word2) : apiClient.subtractWords(word1, word2);
             let delay = new Promise(resolve => setTimeout(resolve, 1500));
 
             Promise.all([apiCall, delay]).then(([result]) => {

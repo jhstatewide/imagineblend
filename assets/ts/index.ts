@@ -16,7 +16,7 @@ import { WordTargetComponent } from './components/word_target';
 import { AnswerArea } from './components/answer_area';
 import { CalculateButton } from './components/calculate_button';
 import { GameStateRenderer } from './components/game_state_renderer';
-import { AddAPIClient } from './api/add_api_client';
+import { ImagineBlendAPIClient } from './api/imagineblend_api_client';
 import { GameArea } from './components/GameArea';
 
 const gameArea = h(GameArea, { gameState: gameState });

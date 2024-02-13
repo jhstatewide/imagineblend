@@ -50,6 +50,9 @@ fun main() {
                     // TODO: some caching I guess???
                     get(WordController::addWords)
                 }
+                path("/subtract/{word1}/{word2}") {
+                    get(WordController::subtractWords)
+                }
             }
             sse("/sse") { sse ->
                 eventBroadcaster.addClient(sse)

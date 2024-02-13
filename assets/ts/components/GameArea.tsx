@@ -6,12 +6,26 @@ import { CalculateButton } from './calculate_button';
 import { useEffect, useState } from 'preact/hooks';
 import { GameAreaProps, BroadcastMessageBuffer } from './game_area';
 import { isMobile } from '../utils';
+import { WordOperator } from '../api/imagineblend_api_client';
 
 
 export function GameArea(props: GameAreaProps) {
 
     const [messages, setMessages] = useState<string[]>([]);
-    const broadcastMessageBuffer = new BroadcastMessageBuffer();
+    const [operator, setOperator] = useState('add');
+    const [eventSource, setEventSource] = useState<EventSource | null>(null);
+    const [broadcastMessageBuffer, setBroadcastMessageBuffer] = useState(new BroadcastMessageBuffer());
+
+    useEffect(() => {
+        props.gameState.operator.value = operator === 'add' ? WordOperator.ADD : WordOperator.SUBTRACT;
+    }, [operator]);
+
+    useEffect(() => {
+        // add SSE listener
+        console.log("Registering SSE listener!");
+        setEventSource(sseSource());
+    }, []);
+
 
     function sseSource(): EventSource {
         // OK, we are using esbuild to set a global called API_HOST
@@ -34,37 +48,36 @@ export function GameArea(props: GameAreaProps) {
     }
 
     useEffect(() => {
-        // add SSE listener
-        console.log("Registering SSE listener!");
-        const eventSource = sseSource();
-
-        eventSource.onmessage = function (event) {
-            console.log('SSE event received');
-            console.log(event.data);
-            broadcastMessageBuffer.addMessage(event.data);
-        };
-
-        eventSource.onerror = function (event) {
-            console.log('SSE error');
-            console.log(event);
-            // now print a descriptive message
-            if (event.eventPhase === EventSource.CLOSED) {
-                console.log('SSE connection closed');
-            } else {
-                console.log('SSE connection error');
-            }
-        };
-
-        eventSource.addEventListener('connected', function (event) {
-            console.log('SSE connected');
-            console.log(event);
-        });
-
-        return () => {
-            console.log("Unregistering SSE listener");
-            eventSource.close();
-        };
-    });
+        if (eventSource) {
+            eventSource.onmessage = function (event) {
+                console.log('SSE event received');
+                console.log(event.data);
+                broadcastMessageBuffer.addMessage(event.data);
+            };
+    
+            eventSource.onerror = function (event) {
+                console.log('SSE error');
+                console.log(event);
+                // now print a descriptive message
+                if (event.eventPhase === EventSource.CLOSED) {
+                    console.log('SSE connection closed');
+                } else {
+                    console.log('SSE connection error');
+                }
+            };
+    
+            eventSource.addEventListener('connected', function (event) {
+                console.log('SSE connected');
+                console.log(event);
+            });
+    
+            return () => {
+                console.log("Unregistering SSE listener");
+                eventSource.close();
+            };
+        }
+        
+    }, [eventSource]);
 
     return (
         <div className="game-area">
@@ -73,13 +86,22 @@ export function GameArea(props: GameAreaProps) {
                     <MessageList messages={broadcastMessageBuffer.getMessages()}></MessageList>
                 </div>
             </div>
-            <div class="row sticky-top" style={{backgroundColor: 'white', paddingBottom: "1em"}}>
+            <div class="row sticky-top" style={{ backgroundColor: 'white', paddingBottom: "1em" }}>
                 <div class="col-lg-3 col-sm-3 col-xs-12 ingredient-container">
                     <WordTargetComponent word={props.gameState.word1}></WordTargetComponent>
                 </div>
 
                 <div className="col-lg-1 col-sm-1 col-xs-12 my-auto">
-                    <span style={{ textAlign: 'center', display: 'block' }}>+</span>
+                    <div style={{ textAlign: 'center', display: 'block' }}>
+                        <input type="radio" id="add" name="operator" value="add"
+                            checked={operator === 'add'}
+                            onChange={(e) => e.target && setOperator((e.target as HTMLInputElement).value)} />
+                        <label htmlFor="add">+</label><br />
+                        <input type="radio" id="subtract" name="operator" value="subtract"
+                            checked={operator === 'subtract'}
+                            onChange={(e) => e.target && setOperator((e.target as HTMLInputElement).value)} />
+                        <label htmlFor="subtract">-</label>
+                    </div>
                 </div>
 
                 <div className="col-lg-3 col-sm-3 col-xs-12 ingredient-container">

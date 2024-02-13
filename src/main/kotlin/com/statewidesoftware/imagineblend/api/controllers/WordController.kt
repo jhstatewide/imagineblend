@@ -66,6 +66,51 @@ object WordController {
         }
     }
 
+    @OpenApi(
+    summary = "Subtract one word from another",
+    description = "This endpoint takes two words and subtracts the second word from the first",
+    tags = ["Words"],
+    pathParams = [
+        OpenApiParam(name = "word1", description = "The first word"),
+        OpenApiParam(name = "word2", description = "The second word")
+    ],
+    methods = [HttpMethod.GET],
+    responses = [
+        OpenApiResponse(status = "200", description = "The result of the subtraction"),
+        OpenApiResponse(status = "400", description = "An error occurred")
+    ],
+    path = "/words/subtract/{word1}/{word2}"
+)
+fun subtractWords(ctx: Context) {
+    val word1 = ctx.pathParam("word1")
+    val word2 = ctx.pathParam("word2")
+    synchronized(wordCombiner) {
+        // retry up to 3 times...
+        repeat(3) {
+            logger.info { "Subtracting $word2 from $word1!" }
+            when (val result = wordCombiner.subtractWords(word1, word2)) {
+                is Ok -> {
+                    if (acceptableAnswer(result.value)) {
+                        eventBroadcaster.broadcast("$word1 - $word2 = ${result.value}")
+                        ctx.result(result.value)
+                        return
+                    } else {
+                        logger.error { "Invalid word generated: ${result.value}" }
+                        logger.error { "This was attempted $it times" }
+                    }
+                }
+                is Err -> {
+                    eventBroadcaster.broadcast("$word1 - $word2 = ERROR!")
+                    logger.error { "Error generating word: ${result.error.message}" }
+                }
+            }
+        }
+
+       ctx.status(500)
+       ctx.result("Error generating word!")
+    }
+}
+
     private fun acceptableAnswer(answer: String): Boolean {
         return answer.matches(Regex("[A-Z '-]+"))
     }
